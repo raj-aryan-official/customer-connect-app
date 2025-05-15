@@ -1,0 +1,55 @@
+/* Register.css - Styles for Register page */
+.register-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f9fb;
+}
+.register-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,95,168,0.08);
+  padding: 40px 32px;
+  max-width: 440px;
+  width: 100%;
+}
+.register-title {
+  color: #2c5fa8;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.register-input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  font-size: 1em;
+}
+.register-btn {
+  background: #FF7B54;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.register-btn:hover {
+  background: #d95c2b;
+}
+.register-link {
+  color: #2c5fa8;
+  text-decoration: underline;
+  font-size: 0.95em;
+  text-align: center;
+  margin-top: 12px;
+}

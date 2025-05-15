@@ -1,0 +1,31 @@
+/* Header.css - Cool dark theme header styles */
+.cc-header, header {
+  background: linear-gradient(90deg, #232b39 60%, #394867 100%);
+  color: #e0e6ed;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(44,95,168,0.08);
+}
+.cc-logo {
+  font-size: 1.7em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #7f9cf5;
+}
+.cc-tagline {
+  font-size: 1em;
+  margin-left: 18px;
+  color: #a0aec0;
+}
+.cc-header-actions {
+  display: flex;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .cc-header, header { flex-direction: column; align-items: flex-start; padding: 14px 8px; background: linear-gradient(90deg, #232b39 60%, #394867 100%); }
+  .cc-logo { font-size: 1.2em; }
+  .cc-tagline { font-size: 0.9em; margin-left: 0; }
+  .cc-header-actions { margin-top: 10px; }
+}

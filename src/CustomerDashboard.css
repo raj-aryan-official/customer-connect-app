@@ -1,0 +1,64 @@
+/* CustomerDashboard.css - Styles for CustomerDashboard page */
+.dashboard-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #181c24 0%, #232b39 100%);
+  padding: 32px 0;
+}
+.dashboard-title {
+  color: #7f9cf5;
+  font-size: 2.2em;
+  font-weight: 800;
+  margin-bottom: 28px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  margin-bottom: 36px;
+}
+.order-status {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+.status-badge {
+  padding: 7px 18px;
+  border-radius: 18px;
+  font-weight: 700;
+  background: #232b39;
+  color: #7f9cf5;
+  font-size: 1.1em;
+}
+.order-section {
+  background: #232b39;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(44,95,168,0.10);
+  padding: 28px;
+  margin-bottom: 28px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.order-table th, .order-table td {
+  border: 1px solid #394867;
+  padding: 10px 12px;
+  font-size: 1em;
+  color: #e0e6ed;
+}
+.order-table th {
+  background: #232b39;
+  font-weight: 700;
+  color: #7f9cf5;
+}
+@media (max-width: 700px) {
+  .order-section { padding: 12px; }
+  .dashboard-title { font-size: 1.3em; }
+}

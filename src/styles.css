@@ -1,0 +1,151 @@
+/* styles.css - All custom styles for Customer Connect (no Tailwind, no DaisyUI) */
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color-scheme: dark;
+  color: #e0e6ed;
+  background-color: #181c24;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #181c24 0%, #232b39 100%);
+}
+
+a {
+  font-weight: 500;
+  color: #7f9cf5;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #63b3ed;
+}
+
+h1, h2, h3, h4 {
+  font-family: inherit;
+  font-weight: 700;
+  margin: 0 0 0.5em 0;
+  letter-spacing: 0.01em;
+  color: #e0e6ed;
+}
+h1 { font-size: 2.7em; }
+h2 { font-size: 2.1em; }
+h3 { font-size: 1.4em; }
+h4 { font-size: 1.15em; }
+
+button, .cc-btn {
+  border-radius: 8px;
+  border: 1px solid #394867;
+  padding: 0.6em 1.4em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background: linear-gradient(90deg, #394867 60%, #222831 100%);
+  color: #e0e6ed;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(74,78,105,0.08);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+button:hover, .cc-btn:hover {
+  background: linear-gradient(90deg, #222831 60%, #394867 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(74,78,105,0.12);
+}
+input, textarea, select, .cc-input {
+  border-radius: 6px;
+  border: 1px solid #394867;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  font-family: inherit;
+  background: #232b39;
+  color: #e0e6ed;
+  margin-bottom: 8px;
+  outline: none;
+  transition: border 0.2s;
+}
+input:focus, textarea:focus, select:focus, .cc-input:focus {
+  border: 1.5px solid #7f9cf5;
+}
+
+.cc-header, header {
+  background: linear-gradient(90deg, #232b39 60%, #394867 100%);
+  color: #e0e6ed;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(74,78,105,0.08);
+}
+.cc-logo {
+  font-size: 1.7em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #7f9cf5;
+}
+.cc-tagline {
+  font-size: 1em;
+  margin-left: 18px;
+  color: #a0aec0;
+}
+.cc-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.cc-footer, footer {
+  background: #232b39;
+  color: #a0aec0;
+  text-align: center;
+  padding: 18px 0 10px 0;
+  font-size: 1em;
+  letter-spacing: 0.01em;
+  margin-top: 40px;
+}
+
+.cc-alert {
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-weight: 600;
+  background: #232b39;
+  color: #7f9cf5;
+  border-left: 5px solid #7f9cf5;
+  box-shadow: 0 2px 8px rgba(74,78,105,0.08);
+}
+.cc-alert-info { border-left-color: #7f9cf5; }
+.cc-alert-success { border-left-color: #38b000; background: #22332a; color: #a3e635; }
+.cc-alert-error { border-left-color: #d90429; background: #3a1a1a; color: #f87171; }
+
+.cc-card {
+  background: #232b39;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44,95,168,0.08);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #232b39;
+}
+::-webkit-scrollbar-thumb {
+  background: #394867;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .cc-header, header { flex-direction: column; align-items: flex-start; padding: 14px 8px; background: linear-gradient(90deg, #232b39 60%, #394867 100%); }
+  .cc-logo { font-size: 1.2em; }
+  .cc-tagline { font-size: 0.9em; margin-left: 0; }
+  .cc-header-actions { margin-top: 10px; }
+  .cc-card { padding: 12px; }
+}

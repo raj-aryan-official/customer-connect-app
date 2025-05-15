@@ -1,0 +1,39 @@
+/* OrderList.css - Styles for OrderList component */
+.order-list-root {
+  margin: 32px auto;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44,95,168,0.08);
+  padding: 24px;
+}
+.order-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.order-list-table th, .order-list-table td {
+  border: 1px solid #eaf2fb;
+  padding: 8px 10px;
+  text-align: center;
+}
+.order-list-table th {
+  background: #f4f8fd;
+}
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  background: #eaf2fb;
+  color: #2c5fa8;
+  text-transform: capitalize;
+}
+.status-confirmed { background: #d1f7c4; color: #388e3c; }
+.status-packed { background: #fff3cd; color: #b8860b; }
+.status-completed { background: #c8e6c9; color: #388e3c; }
+.status-cancelled { background: #ffcdd2; color: #c62828; }
+.order-loading, .order-empty {
+  text-align: center;
+  color: #888;
+  margin: 24px 0;
+}

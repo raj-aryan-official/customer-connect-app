@@ -1,0 +1,7 @@
+/* index.css - Only Vite/React default or minimal reset, no custom styles. */
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}

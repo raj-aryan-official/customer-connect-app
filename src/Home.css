@@ -1,0 +1,365 @@
+/* Home.css - Styles for Home.jsx (refactored for class-based usage) */
+
+.home-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f7f9fb;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c5fa8;
+  color: #fff;
+  padding: 24px 40px 16px 40px;
+  box-shadow: 0 2px 8px rgba(44, 95, 168, 0.08);
+}
+.header-title-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.header-title {
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.header-tagline {
+  margin-left: 0;
+  font-size: 1em;
+  font-weight: 600;
+  opacity: 0.8;
+}
+.header-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-outline {
+  background: #fff;
+  color: #2c5fa8;
+  border: 2px solid #2c5fa8;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-outline:hover {
+  background: #2c5fa8;
+  color: #fff;
+}
+.btn-accent {
+  background: #FF7B54;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-accent:hover {
+  background: #d95c2b;
+}
+.btn-primary {
+  background: #2c5fa8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover {
+  background: #1a3c6b;
+}
+
+.hero-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 48px 0;
+  background: #eaf2fb;
+}
+.hero-content {
+  max-width: 500px;
+}
+.hero-title {
+  color: #2c5fa8;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+.hero-subtitle {
+  font-size: 1.2em;
+  margin-bottom: 24px;
+}
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.hero-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px rgba(44,95,168,0.08);
+  background: #fff;
+}
+
+.timeline-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px 0 32px 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,95,168,0.08);
+  text-align: center;
+}
+.timeline-title {
+  color: #2c5fa8;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+.timeline-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.timeline-step {
+  flex: 1 1 120px;
+  background: #f4f8fd;
+  border-radius: 12px;
+  padding: 18px 10px;
+  margin: 0 4px;
+  box-shadow: 0 2px 8px rgba(44,95,168,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+.timeline-icon {
+  font-size: 2em;
+  margin-bottom: 8px;
+}
+.timeline-label {
+  font-size: 0.95em;
+}
+
+.problem-section {
+  max-width: 1100px;
+  margin: 48px auto 0 auto;
+  padding: 0 16px;
+}
+.problem-title {
+  color: #2c5fa8;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.problem-columns {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.problem-box {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,95,168,0.08);
+  flex: 1 1 260px;
+  min-width: 220px;
+  padding: 28px 18px 18px 18px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.problem-icon {
+  font-size: 2em;
+}
+.problem-heading {
+  color: #FF7B54;
+  margin: 10px 0;
+}
+.problem-list {
+  color: #444;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefit-section {
+  max-width: 1100px;
+  margin: 48px auto 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,95,168,0.08);
+  padding: 40px 0 32px 0;
+  text-align: center;
+}
+.benefit-title {
+  color: #2c5fa8;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+.benefit-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+.benefit-box {
+  background: #f4f8fd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44,95,168,0.04);
+  flex: 1 1 180px;
+  min-width: 180px;
+  max-width: 220px;
+  padding: 24px 12px 18px 12px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.benefit-icon {
+  font-size: 2em;
+}
+.benefit-heading {
+  color: #4CAF50;
+  margin: 8px 0;
+}
+.benefit-desc {
+  font-size: 0.95em;
+}
+
+.target-section {
+  max-width: 900px;
+  margin: 48px auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  padding: 0 16px;
+}
+.target-box {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,95,168,0.08);
+  flex: 1;
+  min-width: 220px;
+  padding: 32px 18px 18px 18px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.target-icon {
+  font-size: 2em;
+}
+.target-heading {
+  color: #2c5fa8;
+  margin: 10px 0;
+}
+.target-desc {
+  font-size: 0.95em;
+}
+
+.footer {
+  background: #2c5fa8;
+  color: #fff;
+  margin-top: auto;
+}
+.footer-columns {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+}
+.footer-col {
+  flex: 1 1 220px;
+  min-width: 180px;
+  margin-bottom: 24px;
+}
+.footer-heading {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-list li a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-list li a:hover {
+  color: #FF7B54;
+}
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+.footer-social-icon {
+  width: 28px;
+  height: 28px;
+}
+.footer-bottom {
+  border-top: 1px solid #fff3;
+  margin-top: 18px;
+  padding: 16px 0 12px 0;
+  text-align: center;
+  font-size: 1em;
+}
+.footer-links a {
+  color: #fff;
+  text-decoration: underline;
+  margin: 0 6px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: #FF7B54;
+}
+
+@media (max-width: 900px) {
+  .timeline-steps, .problem-columns, .benefit-boxes, .target-section, .footer-columns {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .header, .footer-columns {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .hero-section {
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px 0 24px 0;
+  }
+}
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 8px 10px 8px;
+  }
+  .header-title {
+    font-size: 1.5em;
+  }
+  .hero-title {
+    font-size: 1.5em;
+  }
+  .timeline-section, .benefit-section, .problem-section, .target-section {
+    padding: 18px 4px;
+  }
+}
