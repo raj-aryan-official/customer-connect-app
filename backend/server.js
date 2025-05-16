@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const inventoryRoutes = require('./routes/inventory');
+const connectDB = require('./config/db');
 
 const app = express();
 app.use(express.json());
@@ -22,8 +23,6 @@ app.use('/api/inventory', inventoryRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
-  })
-  .catch(err => console.error('MongoDB connection error:', err));
+connectDB().then(() => {
+  app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+});
