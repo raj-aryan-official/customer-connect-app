@@ -1,42 +1,30 @@
 // backend/routes/auth.js
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const authController = require('../controllers/authController');
+const auth = require('../middleware/auth');
 const rateLimit = require('../middleware/rateLimit');
 const router = express.Router();
 
-// Registration
-router.post('/register', rateLimit, async (req, res) => {
-  try {
-    const { email, password, role, name, phone, shopName, address, businessLicense } = req.body;
-    if (!email || !password || !role) return res.status(400).json({ message: 'Missing required fields' });
-    const exists = await User.findOne({ email });
-    if (exists) return res.status(400).json({ message: 'User already exists' });
-    const hash = await bcrypt.hash(password, 10);
-    const user = new User({ email, password: hash, role, name, phone, shopName, address, businessLicense });
-    await user.save();
-    res.status(201).json({ message: 'Registered successfully' });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
-  }
-});
+// Registration & Login
+router.post('/register', rateLimit, authController.register);
+router.post('/login', rateLimit, authController.login);
 
-// Login
-router.post('/login', rateLimit, async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ message: 'Invalid credentials' });
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user._id, role: user.role, email: user.email, name: user.name, shopName: user.shopName } });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
-  }
-});
+// Password reset & email verification
+router.post('/forgot-password', authController.forgotPassword);
+router.post('/reset-password', authController.resetPassword);
+router.post('/send-verification', authController.sendVerification);
+router.post('/verify-email', authController.verifyEmail);
 
-// Password reset and email verification would go here (implement as needed)
+// Firebase password reset and FCM notification
+router.post('/firebase-reset', authController.sendFirebaseReset);
+router.post('/fcm', authController.sendFCM);
+
+// User profile management
+router.get('/profile', auth(), authController.getProfile);
+router.put('/profile', auth(), authController.updateProfile);
+router.delete('/account', auth(), authController.deleteAccount);
+
+// List all users (admin only - add admin check as needed)
+router.get('/users', auth(), authController.listUsers);
 
 module.exports = router;

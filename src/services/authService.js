@@ -1,29 +1,17 @@
 // authService.js - Handles authentication API calls
-const API = '/api/auth';
+import axios from 'axios';
 
-export async function login(email, password) {
-  const res = await fetch(`${API}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ email, password })
-  });
-  return res.json();
-}
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/auth';
 
-export async function register(data) {
-  const res = await fetch(`${API}/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify(data)
-  });
-  return res.json();
-}
-
-export async function logout() {
-  await fetch(`${API}/logout`, {
-    method: 'POST',
-    credentials: 'include'
-  });
-}
+export const register = (data) => axios.post(`${API_URL}/register`, data);
+export const login = (data) => axios.post(`${API_URL}/login`, data);
+export const forgotPassword = (data) => axios.post(`${API_URL}/forgot-password`, data);
+export const resetPassword = (data) => axios.post(`${API_URL}/reset-password`, data);
+export const sendVerification = (data) => axios.post(`${API_URL}/send-verification`, data);
+export const verifyEmail = (data) => axios.post(`${API_URL}/verify-email`, data);
+export const getProfile = (token) => axios.get(`${API_URL}/profile`, { headers: { Authorization: `Bearer ${token}` } });
+export const updateProfile = (data, token) => axios.put(`${API_URL}/profile`, data, { headers: { Authorization: `Bearer ${token}` } });
+export const deleteAccount = (token) => axios.delete(`${API_URL}/account`, { headers: { Authorization: `Bearer ${token}` } });
+export const listUsers = (token) => axios.get(`${API_URL}/users`, { headers: { Authorization: `Bearer ${token}` } });
+export const sendFirebaseReset = (data) => axios.post(`${API_URL}/firebase-reset`, data);
+export const sendFCM = (data, token) => axios.post(`${API_URL}/fcm`, data, { headers: { Authorization: `Bearer ${token}` } });

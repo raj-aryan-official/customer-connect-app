@@ -5,6 +5,15 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
+// Firebase Admin SDK setup
+const admin = require('firebase-admin');
+const serviceAccount = require('./customer-connect-b934f-firebase-adminsdk-fbsvc-3dea989d56.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');

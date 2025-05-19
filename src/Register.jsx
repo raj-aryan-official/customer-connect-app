@@ -21,25 +21,29 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setError('');
-    setSuccess(false);
-    try {
-      const data = await registerApi({ role, ...form });
-      if (data && data.message && data.message.includes('Registered')) {
-        setSuccess(true);
-        toast.success('Registration successful! Check your email for verification.');
-        setTimeout(() => navigate('/login'), 1500);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  try {
+    const response = await loginApi({ email, password });
+    const data = response.data;
+    if (data && data.token && data.user) {
+      login({ ...data.user, token: data.token }); // Save user and token in context/localStorage
+      toast.success('Login successful!');
+      if (data.user.role === 'customer') {
+        navigate('/dashboard/customer');
       } else {
-        setError(data.message || 'Registration failed');
-        toast.error(data.message || 'Registration failed');
+        navigate('/dashboard/shopkeeper');
       }
-    } catch (err) {
-      setError('Registration failed');
-      toast.error('Registration failed');
+    } else {
+      setError(data.message || 'Login failed');
+      toast.error(data.message || 'Login failed');
     }
-  };
+  } catch (err) {
+    setError(err.response?.data?.message || 'Login failed');
+    toast.error(err.response?.data?.message || 'Login failed');
+  }
+};
 
   return (
     <div className="register-root">

@@ -8,8 +8,10 @@ module.exports = (role) => async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    if (role && req.user.role !== role) return res.status(403).json({ message: 'Forbidden' });
-    // Optionally, fetch user from DB
+    // Admin check: allow if role is 'admin' or matches required role
+    if (role && req.user.role !== role && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
     req.userDoc = await User.findById(req.user.id);
     next();
   } catch (err) {
