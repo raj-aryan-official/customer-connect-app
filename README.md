@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Shop Management System
 
 A full-stack application for managing shop orders and products, with separate interfaces for customers and shop owners.
@@ -101,3 +102,35 @@ The application will be available at:
 - GET /api/orders/shop-orders - Get shop owner's orders
 - PATCH /api/orders/:orderId/status - Update order status
 - PATCH /api/orders/:orderId/payment - Update payment status
+=======
+# Customer connect app
+
+*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/raj-aryan-officials-projects/v0-customer-connect-app)
+[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/Qeb2Qvarx99)
+
+## Overview
+
+This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
+Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+
+## Deployment
+
+Your project is live at:
+
+**[https://vercel.com/raj-aryan-officials-projects/v0-customer-connect-app](https://vercel.com/raj-aryan-officials-projects/v0-customer-connect-app)**
+
+## Build your app
+
+Continue building your app on:
+
+**[https://v0.dev/chat/projects/Qeb2Qvarx99](https://v0.dev/chat/projects/Qeb2Qvarx99)**
+
+## How It Works
+
+1. Create and modify your project using [v0.dev](https://v0.dev)
+2. Deploy your chats from the v0 interface
+3. Changes are automatically pushed to this repository
+4. Vercel deploys the latest version from this repository
+>>>>>>> 1e10aa3d80a8e1e6a29b89963eac8741c71de576
