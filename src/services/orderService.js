@@ -1,27 +1,19 @@
-// orderService.js - Handles order API calls
-const API = '/api/orders';
+import { apiFetch } from './api';
 
-export async function getOrders() {
-  const res = await fetch(API, { credentials: 'include' });
-  return res.json();
-}
-
-export async function createOrder(order) {
-  const res = await fetch(API, {
+export function createOrder(order) {
+  return apiFetch('/orders', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify(order)
+    body: JSON.stringify(order),
   });
-  return res.json();
 }
 
-export async function updateOrderStatus(id, status) {
-  const res = await fetch(`${API}/${id}/status`, {
+export function getOrders() {
+  return apiFetch('/orders');
+}
+
+export function updateOrderStatus(id, status) {
+  return apiFetch(`/orders/${id}/status`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ status })
+    body: JSON.stringify({ status }),
   });
-  return res.json();
 }

@@ -1,30 +1,103 @@
-# Customer Connect
+# Shop Management System
 
-A seamless grocery pre-order platform bridging customers & shopkeepers.
+A full-stack application for managing shop orders and products, with separate interfaces for customers and shop owners.
 
 ## Features
-- Dual-role authentication (Customer & Shopkeeper)
-- Real-time order status tracking
-- Shopkeeper inventory sync
-- Secure JWT authentication
-- Responsive React frontend (Vite, Tailwind CSS, DaisyUI)
-- MongoDB Atlas backend
 
-## Getting Started
+### Customer Features
+- User registration and login
+- Browse available products
+- Add products to cart
+- Submit orders
+- Track order status
+- View order history
+
+### Shop Owner Features
+- User registration and login
+- Manage products (add, update, delete)
+- View and manage orders
+- Update order status
+- Track payment status
+
+## Tech Stack
 
 ### Frontend
-```sh
+- React.js
+- React Router
+- Axios
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+
+## Setup Instructions
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd shop-management-system
+```
+
+2. Set up the backend:
+```bash
+cd backend
 npm install
+```
+
+3. Create a `.env` file in the backend directory with the following variables:
+```
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+```
+
+4. Start the backend server:
+```bash
 npm run dev
 ```
 
-### Backend (to be added)
-- Node.js/Express server
-- MongoDB Atlas connection
+5. Set up the frontend:
+```bash
+cd frontend
+npm install
+```
 
-## Project Structure
-- `/src` - React frontend
-- `/backend` - Node.js/Express backend (to be created)
+6. Start the frontend development server:
+```bash
+npm start
+```
 
-## License
-MIT
+The application will be available at:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:5000
+
+## Usage
+
+1. Register as either a customer or shop owner
+2. Log in with your credentials
+3. Access your respective dashboard
+4. Start managing products and orders
+
+## API Endpoints
+
+### Authentication
+- POST /api/auth/register - Register new user
+- POST /api/auth/login - Login user
+
+### Products
+- GET /api/products - Get all products
+- GET /api/products/my-products - Get shop owner's products
+- POST /api/products - Add new product
+- PUT /api/products/:productId - Update product
+- DELETE /api/products/:productId - Delete product
+
+### Orders
+- POST /api/orders - Create new order
+- GET /api/orders/my-orders - Get customer's orders
+- GET /api/orders/shop-orders - Get shop owner's orders
+- PATCH /api/orders/:orderId/status - Update order status
+- PATCH /api/orders/:orderId/payment - Update payment status

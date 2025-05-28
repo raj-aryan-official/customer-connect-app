@@ -1,37 +1,34 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css';
-import { login as loginApi } from './services/authService';
 import { AuthContext } from './context/AuthContext';
-import toast from 'react-hot-toast';
+import { login as loginApi } from './services/authService';
+import './Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('customer');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
       const data = await loginApi(email, password);
-      if (data && data.user) {
-        login(data.user);
-        toast.success('Login successful!');
-        if (data.user.role === 'customer') {
-          navigate('/dashboard/customer');
-        } else {
-          navigate('/dashboard/shopkeeper');
-        }
-      } else {
-        setError(data.message || 'Login failed');
-        toast.error(data.message || 'Login failed');
+      // Defensive checks
+      if (!data || !data.user || !data.token) {
+        throw new Error(data?.message || 'Login failed');
       }
+      if (data.user.role !== role) {
+        throw new Error('Role mismatch: Please select the correct role.');
+      }
+      login(data.user, data.token);
+      navigate(role === 'shopkeeper' ? '/dashboard/shopkeeper' : '/dashboard/customer');
     } catch (err) {
-      setError('Login failed');
-      toast.error('Login failed');
+      console.error('Login error:', err);
+      setError(err.message || 'Login failed');
     }
   };
 
@@ -40,6 +37,10 @@ function Login() {
       <form className="login-card" onSubmit={handleSubmit}>
         <div className="login-title">Sign In</div>
         <div className="login-form">
+          <select className="login-input" value={role} onChange={e => setRole(e.target.value)} style={{marginBottom:'1em'}}>
+            <option value="customer">Customer</option>
+            <option value="shopkeeper">Shopkeeper</option>
+          </select>
           <input
             className="login-input"
             type="email"
@@ -60,7 +61,7 @@ function Login() {
         </div>
         {error && <div className="login-link" style={{color:'red'}}>{error}</div>}
         <div className="login-link">
-          <Link to="/forgot-password">Forgot password?</Link> | <Link to="/register">Register</Link>
+          <Link to="/register">Register</Link>
         </div>
       </form>
     </div>

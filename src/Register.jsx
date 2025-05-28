@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { register as registerApi } from './services/authService';
 import './Register.css';
 
@@ -21,29 +20,23 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  try {
-    const response = await loginApi({ email, password });
-    const data = response.data;
-    if (data && data.token && data.user) {
-      login({ ...data.user, token: data.token }); // Save user and token in context/localStorage
-      toast.success('Login successful!');
-      if (data.user.role === 'customer') {
-        navigate('/dashboard/customer');
-      } else {
-        navigate('/dashboard/shopkeeper');
-      }
-    } else {
-      setError(data.message || 'Login failed');
-      toast.error(data.message || 'Login failed');
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setError('');
+    try {
+      // Always send a name field (for shopkeeper, use shopName as name)
+      const payload = {
+        ...form,
+        role,
+        name: role === 'shopkeeper' ? form.shopName : form.name,
+      };
+      await registerApi(payload);
+      setSuccess(true);
+      setTimeout(() => navigate('/login'), 1000);
+    } catch (err) {
+      setError(err.message);
     }
-  } catch (err) {
-    setError(err.response?.data?.message || 'Login failed');
-    toast.error(err.response?.data?.message || 'Login failed');
-  }
-};
+  };
 
   return (
     <div className="register-root">
@@ -65,6 +58,24 @@ function Register() {
               required
             />
           )}
+          <input
+            className="register-input"
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="register-input"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
           {role === 'shopkeeper' && (
             <>
               <input
@@ -87,30 +98,10 @@ function Register() {
               />
             </>
           )}
-          <input
-            className="register-input"
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="register-input"
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
           <button className="register-btn" type="submit">Register</button>
         </div>
         {error && <div className="register-link" style={{color:'red'}}>{error}</div>}
-        {success && <div className="register-link" style={{color:'green'}}>
-          Registration successful! Please check your email for verification. Redirecting to login...
-        </div>}
+        {success && <div className="register-link" style={{color:'green'}}>Registration successful! Redirecting...</div>}
         <div className="register-link">
           <Link to="/login">Already have an account? Login</Link>
         </div>

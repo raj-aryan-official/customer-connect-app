@@ -1,99 +1,209 @@
-// ShopkeeperDashboard.jsx - Shopkeeper dashboard page skeleton
-import React, { useEffect, useState, useContext } from 'react';
-import './ShopkeeperDashboard.css';
+import React, { useEffect, useState } from 'react';
+import { getOrders, updateOrderStatus } from './services/orderService';
 import { getProducts, addProduct, updateProduct, deleteProduct } from './services/productService';
-import { AuthContext } from './context/AuthContext';
-import OrderList from './components/OrderList';
-import toast from 'react-hot-toast';
 
 function ShopkeeperDashboard() {
+  const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
-  const [form, setForm] = useState({ name: '', price: '', stock: '', category: '', image: '' });
-  const [editing, setEditing] = useState(null);
+  const [error, setError] = useState('');
+  const [productForm, setProductForm] = useState({ name: '', price: '', stock: '', category: '', image: '' });
+  const [editingProduct, setEditingProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { logout } = useContext(AuthContext);
+  const [connectionStatus, setConnectionStatus] = useState('checking');
 
-  const fetchProducts = async () => {
-    setLoading(true);
-    const data = await getProducts();
-    setProducts(data);
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchProducts(); }, []);
-
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      if (editing) {
-        await updateProduct(editing, form);
-        toast.success('Product updated!');
-      } else {
-        await addProduct(form);
-        toast.success('Product added!');
+  useEffect(() => {
+    const checkConnection = async () => {
+      try {
+        setLoading(true);
+        // Test connection by fetching products
+        await getProducts();
+        setConnectionStatus('connected');
+        
+        // Fetch initial data
+        const [ordersData, productsData] = await Promise.all([
+          getOrders(),
+          getProducts()
+        ]);
+        
+        setOrders(ordersData);
+        setProducts(productsData);
+        setError('');
+      } catch (err) {
+        setConnectionStatus('error');
+        setError('Failed to connect to database: ' + err.message);
+      } finally {
+        setLoading(false);
       }
-      setForm({ name: '', price: '', stock: '', category: '', image: '' });
-      setEditing(null);
-      fetchProducts();
-    } catch (error) {
-      toast.error('An error occurred!');
+    };
+
+    checkConnection();
+  }, []);
+
+  const handleStatusChange = async (orderId, status) => {
+    try {
+      await updateOrderStatus(orderId, status);
+      setOrders(orders => orders.map(o => o._id === orderId ? { ...o, status } : o));
+    } catch (err) {
+      setError(err.message);
     }
   };
 
-  const handleEdit = p => {
-    setForm({ name: p.name, price: p.price, stock: p.stock, category: p.category, image: p.image });
-    setEditing(p._id);
+  const handleProductFormChange = e => {
+    setProductForm({ ...productForm, [e.target.name]: e.target.value });
   };
 
-  const handleDelete = async id => {
+  const handleAddProduct = async e => {
+    e.preventDefault();
+    try {
+      const newProduct = await addProduct(productForm);
+      setProducts(products => [...products, newProduct]);
+      setProductForm({ name: '', price: '', stock: '', category: '', image: '' });
+      setError('');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleEditProduct = product => {
+    setEditingProduct(product._id);
+    setProductForm({
+      name: product.name,
+      price: product.price,
+      stock: product.stock,
+      category: product.category,
+      image: product.image || ''
+    });
+  };
+
+  const handleUpdateProduct = async e => {
+    e.preventDefault();
+    try {
+      const updated = await updateProduct(editingProduct, productForm);
+      setProducts(products => products.map(p => p._id === editingProduct ? updated : p));
+      setEditingProduct(null);
+      setProductForm({ name: '', price: '', stock: '', category: '', image: '' });
+      setError('');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleDeleteProduct = async id => {
     try {
       await deleteProduct(id);
-      toast.success('Product deleted!');
-      fetchProducts();
-    } catch (error) {
-      toast.error('An error occurred!');
+      setProducts(products => products.filter(p => p._id !== id));
+      setError('');
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <div className="dashboard-root">
-      <div className="dashboard-title">Shopkeeper Dashboard <button className="btn-outline" style={{float:'right'}} onClick={logout}>Logout</button></div>
-      <form className="product-form" onSubmit={handleSubmit}>
-        <input name="name" value={form.name} onChange={handleChange} placeholder="Product Name" required className="register-input" />
-        <input name="price" value={form.price} onChange={handleChange} placeholder="Price" type="number" required className="register-input" />
-        <input name="stock" value={form.stock} onChange={handleChange} placeholder="Stock" type="number" required className="register-input" />
-        <input name="category" value={form.category} onChange={handleChange} placeholder="Category" className="register-input" />
-        <input name="image" value={form.image} onChange={handleChange} placeholder="Image URL" className="register-input" />
-        <button className="btn-accent" type="submit">{editing ? 'Update' : 'Add'} Product</button>
-        {editing && <button type="button" onClick={() => { setEditing(null); setForm({ name: '', price: '', stock: '', category: '', image: '' }); }}>Cancel</button>}
-      </form>
-      {loading ? <div>Loading...</div> : (
-        <table className="product-table">
-          <thead>
-            <tr><th>Name</th><th>Price</th><th>Stock</th><th>Category</th><th>Image</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
-            {products.map(p => (
-              <tr key={p._id}>
-                <td>{p.name}</td>
-                <td>₹{p.price}</td>
-                <td>{p.stock}</td>
-                <td>{p.category}</td>
-                <td>{p.image ? <img src={p.image} alt={p.name} style={{ width: 40 }} /> : '-'}</td>
-                <td>
-                  <button onClick={() => handleEdit(p)}>Edit</button>
-                  <button onClick={() => handleDelete(p._id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="p-4">
+      <div className="mb-4">
+        <h2 className="text-2xl font-bold">Shopkeeper Dashboard</h2>
+        <div className="mt-2">
+          Database Status: 
+          <span className={`ml-2 px-2 py-1 rounded ${
+            connectionStatus === 'connected' ? 'bg-green-100 text-green-800' :
+            connectionStatus === 'error' ? 'bg-red-100 text-red-800' :
+            'bg-yellow-100 text-yellow-800'
+          }`}>
+            {connectionStatus === 'connected' ? 'Connected' :
+             connectionStatus === 'error' ? 'Connection Error' :
+             'Checking Connection...'}
+          </span>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="flex items-center justify-center p-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span className="ml-2">Loading...</span>
+        </div>
       )}
-      <OrderList shopkeeper />
+
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+
+      <h3>Orders</h3>
+      <ul>
+        {orders.map(order => (
+          <li key={order._id}>
+            Order #{order._id} - Status: {order.status}
+            <button onClick={() => handleStatusChange(order._id, 'confirmed')}>Confirm</button>
+            <button onClick={() => handleStatusChange(order._id, 'packed')}>Pack</button>
+            <button onClick={() => handleStatusChange(order._id, 'completed')}>Complete</button>
+            <ul>
+              {order.items.map(item => (
+                <li key={item.product?._id || item.name}>
+                  {item.name} x {item.quantity} - ₹{item.price}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Products</h3>
+      <ul>
+        {products.map(product => (
+          <li key={product._id}>
+            {product.name} - ₹{product.price} | Stock: {product.stock} | Category: {product.category}
+            <button onClick={() => handleEditProduct(product)}>Edit</button>
+            <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+
+      <h3>{editingProduct ? 'Edit Product' : 'Add Product'}</h3>
+      <form onSubmit={editingProduct ? handleUpdateProduct : handleAddProduct}>
+        <input
+          name="name"
+          placeholder="Name"
+          value={productForm.name}
+          onChange={handleProductFormChange}
+          required
+        />
+        <input
+          name="price"
+          type="number"
+          placeholder="Price"
+          value={productForm.price}
+          onChange={handleProductFormChange}
+          required
+        />
+        <input
+          name="stock"
+          type="number"
+          placeholder="Stock"
+          value={productForm.stock}
+          onChange={handleProductFormChange}
+          required
+        />
+        <input
+          name="category"
+          placeholder="Category"
+          value={productForm.category}
+          onChange={handleProductFormChange}
+        />
+        <input
+          name="image"
+          placeholder="Image URL"
+          value={productForm.image}
+          onChange={handleProductFormChange}
+        />
+        <button type="submit">{editingProduct ? 'Update' : 'Add'}</button>
+        {editingProduct && (
+          <button type="button" onClick={() => {
+            setEditingProduct(null);
+            setProductForm({ name: '', price: '', stock: '', category: '', image: '' });
+          }}>Cancel</button>
+        )}
+      </form>
     </div>
   );
 }

@@ -35,15 +35,18 @@ function Home() {
       {/* Hero Banner */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">Simplify Your Shopping Experience</h1>
-          <p className="hero-subtitle">Send your shopping list, get confirmation, and collect when ready</p>
+          <h1 className="hero-title">Your Local Shopping Connection, Simplified.</h1>
+          <p className="hero-subtitle">Bridge the gap between you and your favorite local shops.
+            Send your shopping list, get confirmation, and pick up ready-to-go orders.</p>
           <div className="hero-actions">
-            <Link to="/login?role=customer"><button className="btn-primary">I'm a Customer</button></Link>
-            <Link to="/login?role=shopkeeper"><button className="btn-accent">I'm a Shop Owner</button></Link>
+            {/* <Link to="/login?role=customer"><button className="btn-primary">I'm a Customer</button></Link>
+            <Link to="/login?role=shopkeeper"><button className="btn-accent">I'm a Shop Owner</button></Link> */}
+
+            <Link to="/register"><button className='Sign-in'>Sign up now</button></Link>
           </div>
         </div>
         <div className="hero-illustration">
-          <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="Shopping Interaction" className="hero-img" />
+          <img src="https://okcredit-blog-images-prod.storage.googleapis.com/2021/04/onlinegrocerystore1.jpg" alt="Shopping Interaction" className="hero-img" />
         </div>
       </section>
 
